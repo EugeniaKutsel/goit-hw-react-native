@@ -1,20 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import { View } from 'react-native';
+import RegistrationScreen from './Screens/RegistrationScreen/RegistrationScreen';
+import LoginScreen from './Screens/LoginScreen/LoginScreen';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Welcome to your first REACT-NATIVE app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [appIsReady, setAppIsReady] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+          "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),   
+  });
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
+  return (
+    <>
+      <RegistrationScreen onLayout={onLayoutRootView} />
+      {/* <LoginScreen onLayout={onLayoutRootView}/> */}
+    </>
+  )
+}

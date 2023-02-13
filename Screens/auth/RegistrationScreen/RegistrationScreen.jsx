@@ -1,5 +1,9 @@
-import { useState } from "react";
-import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Link } from "@react-navigation/native";
+import React, { useState } from "react";
+import { ImageBackground, Text, TextInput, TouchableOpacity, View, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
+
+import styles from "./RegistrationScreen.styled";
+import AddUserPhoto from "../../../assets/icons/addUserPhoto";
 
 const initialValues = {
   login: '',
@@ -7,53 +11,79 @@ const initialValues = {
   password: ''
 }
 
-export default function RegistrationScreen() {
-  console.log(Platform.OS);
+const RegistrationScreen = ({ setIsAuth }) => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialValues);
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
+  }
+
+  const onSubmit = () => {
     console.log(state);
-    setState(initialValues)
+    setState(initialValues);
+    setIsAuth(true);
   }
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground style={styles.imageBG}
-          source={require("../../assets/images/Photo_BG.png")}>
+          source={require("../../../assets/images/Photo_BG.png")}>
           <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "margin"}>
             <View style={{ ...styles.form, paddingBottom: isShowKeyboard ? 32 : 78 }}>
+              <View style={styles.userPhoto}>
+                <TouchableOpacity style={styles.addIcon}>
+                  <AddUserPhoto/>
+                </TouchableOpacity>
+              </View>
               <Text style={styles.title}>Регистрация</Text>
               <View style={{ marginBottom: 16 }}>
                 <TextInput
                   placeholder="Логин"
                   style={styles.input}
-                  onFocus={() => setIsShowKeyboard(true)}
+                  onFocus={() =>
+                    setIsShowKeyboard(true)
+                  }
                   value={state.login}
                   onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
+                  onSubmitEditing={() => {
+                    setIsShowKeyboard(false);
+                    formSubmit();
+                  }}
                 />
               </View>
               <View style={{ marginBottom: 16 }}>
                 <TextInput
                   placeholder="Адрес электронной почты"
                   style={styles.input}
-                  onFocus={() => setIsShowKeyboard(true)}
+                  onFocus={() =>
+                    setIsShowKeyboard(true)
+                  }
                   value={state.email}
                   onChangeText={(value) => setState((prevState) => ({ ...prevState, email: value }))}
+                  onSubmitEditing={() => {
+                    setIsShowKeyboard(false);
+                    formSubmit();
+                  }}
                 />
               </View>
               <View style={styles.input}>
-                <View style={{ flex: 4 }}>
+                <View style={{ flex: 1 }}>
                   <TextInput
                     placeholder="Пароль"
                     secureTextEntry={true}
                     style={styles.inputText}
-                    onFocus={() => setIsShowKeyboard(true)}
+                    onFocus={() =>
+                      setIsShowKeyboard(true)
+                    }
                     value={state.password}
                     onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
+                    onSubmitEditing={() => {
+                      setIsShowKeyboard(false);
+                      formSubmit();
+                    }}
                   />
                 </View>
                 <View>
@@ -64,10 +94,12 @@ export default function RegistrationScreen() {
               </View>
               {!isShowKeyboard &&
                 <>
-                  <TouchableOpacity style={styles.button} onPress={keyboardHide}>
+                  <TouchableOpacity style={styles.button} onPress={onSubmit}>
                     <Text style={styles.btnText}>Зарегистрироваться</Text>
                   </TouchableOpacity>
-                  <Text style={styles.text}>Уже есть аккаунт? Войти</Text>
+                  <Text style={styles.text}>Уже есть аккаунт?
+                    <Link to={{ screen: 'Login' }}> Войти</Link>
+                  </Text>
                 </>
               }
             </View>
@@ -78,72 +110,4 @@ export default function RegistrationScreen() {
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  imageBG: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'flex-end'
-  },
-  form: {
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 92,
-  },
-  title: {
-    fontFamily: "Roboto-Medium",
-    fontSize: 30,
-    textAlign: 'center',
-    marginBottom: 32,
-  },
-  input: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingLeft: 16,
-    paddingTop: 16,
-    paddingBottom: 15,
-    backgroundColor: "#F6F6F6",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#E8E8E8",
-    fontFamily: "Roboto-Regular",
-    fontSize: 16,
-    height: 50
-  },
-  inputText: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 16,
-  },
-  btnInputText: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 16,
-    color: "#1B4371",
-    paddingRight: 16
-  },
-  button: {
-    backgroundColor: "#FF6C00",
-    borderRadius: 100,
-    height: 51,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 16,
-    marginTop: 43
-  },
-  btnText: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 16,
-    color: "#FFFFFF",
-    textAlign: "center",
-  },
-  text: {
-    textAlign: "center",
-    fontFamily: "Roboto-Regular",
-    fontSize: 16,
-    color: "#1B4371"
-  }
-});
+export default RegistrationScreen;

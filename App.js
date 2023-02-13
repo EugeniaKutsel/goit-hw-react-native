@@ -1,20 +1,23 @@
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { useRoute } from './router';
 import { View } from 'react-native';
-import RegistrationScreen from './Screens/RegistrationScreen/RegistrationScreen';
-import LoginScreen from './Screens/LoginScreen/LoginScreen';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  const routing = useRoute();
 
   useEffect(() => {
     async function prepare() {
       try {
         await Font.loadAsync({
           "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
-          "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),   
-  });
+          "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
+          "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf")
+        });
       } catch (e) {
         console.warn(e);
       } finally {
@@ -35,9 +38,10 @@ export default function App() {
   }
 
   return (
-    <>
-      <RegistrationScreen onLayout={onLayoutRootView} />
-      {/* <LoginScreen onLayout={onLayoutRootView}/> */}
-    </>
+    <View onLayout={onLayoutRootView} style={{flex: 1, justifyContent: "flex-end"}}>
+      <NavigationContainer>
+      {routing}
+    </NavigationContainer>
+    </View>
   )
 }

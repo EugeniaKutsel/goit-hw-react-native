@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
   },
   containerUser: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: 32
   },
   userPhoto: {
     marginRight: 8
@@ -27,6 +28,9 @@ const styles = StyleSheet.create({
     fontSize: 11,
     lineHeight: 15,
     color: "#212121CC"
+  },
+  imageContainer: {
+    marginBottom: 32,
   }
 })
 

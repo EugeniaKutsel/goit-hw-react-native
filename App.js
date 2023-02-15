@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
@@ -38,10 +37,10 @@ export default function App() {
   }
 
   return (
-    <View onLayout={onLayoutRootView} style={{flex: 1, justifyContent: "flex-end"}}>
+    <View onLayout={onLayoutRootView} style={{ flex: 1, justifyContent: "flex-end" }}>
       <NavigationContainer>
-      {routing}
-    </NavigationContainer>
+        {routing}
+      </NavigationContainer>
     </View>
   )
 }

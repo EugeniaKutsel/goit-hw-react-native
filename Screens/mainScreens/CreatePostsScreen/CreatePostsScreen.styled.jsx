@@ -8,13 +8,24 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingTop: 32
   },
-  image: {
-    alignItems: "center",
+  camera: {
     height: 240,
-    backgroundColor: "#F6F6F6",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    borderRadius: 8
+  },
+  image: {
+    position: "absolute",
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#E8E8E8"
+  },
+  cameraBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF4D",
+    borderRadius: 50,
+    width: 60,
+    height: 60
   },
   loadPhoto: {
     fontSize: 16,
@@ -49,6 +60,14 @@ const styles = StyleSheet.create({
   btnText: {
     color: "#BDBDBD",
     fontSize: 16
+  },
+  btnTrash: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F6F6F6",
+    borderRadius: 20,
+    width: 70, 
+    height: 40,
   }
   
 })

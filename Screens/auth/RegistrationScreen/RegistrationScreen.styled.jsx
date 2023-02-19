@@ -3,11 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  imageBG: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'flex-end'
+    justifyContent: "flex-end",
+    width: "100%"
   },
   form: {
     backgroundColor: "#fff",
@@ -16,6 +13,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 92,
+    paddingBottom: 78
   },
   title: {
     fontFamily: "Roboto-Medium",
@@ -24,8 +22,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   input: {
-    flexDirection: "row",
-    alignItems: "center",
+    marginBottom: 16,
     paddingLeft: 16,
     paddingTop: 16,
     paddingBottom: 15,
@@ -37,24 +34,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 50
   },
-  inputText: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 16,
+  btnShowPassword: {
+    position: "absolute",
+    right: 16,
+    top: 16
   },
-  inputFocus: {
-    paddingLeft: 16,
-    paddingTop: 16,
-    paddingBottom: 15,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#FF6C00",
-    height: 50
-  },
-  btnInputText: {
+  showPassword: {
     fontFamily: "Roboto-Regular",
     fontSize: 16,
     color: "#1B4371",
-    paddingRight: 16,
   },
   button: {
     backgroundColor: "#FF6C00",
@@ -63,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 16,
-    marginTop: 43
+    marginTop: 27
   },
   btnText: {
     fontFamily: "Roboto-Regular",

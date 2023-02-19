@@ -10,16 +10,14 @@ import CommentsScreen from "./Screens/nestedScreens/CommentsScreen/CommentsScree
 const AuthStack = createStackNavigator();
 const MainTab = createStackNavigator();
 
-export const useRoute = () => {
-   const [isAuth, setIsAuth] = useState(false);
+const useRoute = (isAuth) => {
+
   if (!isAuth) {
     return (
       <AuthStack.Navigator>
-        <AuthStack.Screen options={{ headerShown: false }} name="Registration">
-           {() => <RegistrationScreen setIsAuth={setIsAuth} />}
+        <AuthStack.Screen options={{ headerShown: false }} name="Registration" component={RegistrationScreen}>
         </AuthStack.Screen>
-        <AuthStack.Screen options={{ headerShown: false }} name="Login">
-          {() => <LoginScreen setIsAuth={setIsAuth} />}
+        <AuthStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen}>
         </AuthStack.Screen>
       </AuthStack.Navigator>
     )
@@ -27,8 +25,46 @@ export const useRoute = () => {
   return (
     <MainTab.Navigator>
       <MainTab.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />
-      <MainTab.Screen name="Map" component={MapScreen} />
-      <MainTab.Screen name="Comments" component={CommentsScreen}/>
+      <MainTab.Screen options={{
+        headerLeftLabelVisible: false,
+        //header
+        title: "Map",
+        headerStyle: {
+          height: 88,
+          
+          borderBottomWidth: 1,
+          borderBottomColor: "#b3b3b3",
+        },
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontFamily: "Roboto-Medium",
+          fontWeight: "bold",
+          fontSize: 17,
+          lineHeight: 22,
+        }
+      }}
+        name="Map" component={MapScreen} />
+      <MainTab.Screen options={{
+        headerLeftLabelVisible: false,
+        //header
+        title: "Comments",
+        headerStyle: {
+          height: 88,
+          
+          borderBottomWidth: 1,
+          borderBottomColor: "#b3b3b3",
+        },
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontFamily: "Roboto-Medium",
+          fontWeight: "bold",
+          fontSize: 17,
+          lineHeight: 22,
+        },
+      }}
+        name="Comments" component={CommentsScreen} />
     </MainTab.Navigator>
   )
 }
+
+export { useRoute};

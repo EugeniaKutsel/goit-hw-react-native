@@ -19,4 +19,4 @@ const CommentsIcon = (props) => (
   </Svg>
 )
 
-export default CommentsIcon;
+export default CommentsIcon

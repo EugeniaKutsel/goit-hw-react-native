@@ -31,6 +31,13 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     marginBottom: 32,
+  },
+  name: {
+    marginTop: 8,
+    marginBottom: 8,
+    fontSize: 16,
+    fontFamily: "Roboto-Medium",
+    fontWeight: "500"
   }
 })
 

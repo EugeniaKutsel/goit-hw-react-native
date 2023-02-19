@@ -10,10 +10,13 @@ import PostsIcon from "../../../assets/icons/posts";
 import BackIcon from "../../../assets/icons/backIcon";
 import CreatePostIcon from "../../../assets/icons/createPostIcon";
 import ProfileIcon from "../../../assets/icons/profileIcon";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../../redux/auth/authOperations";
 
 const HomeTab = createBottomTabNavigator();
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   return (
     <HomeTab.Navigator screenOptions={{
       tabBarShowLabel: false,
@@ -30,7 +33,7 @@ const HomeScreen = ({navigation}) => {
     }}>
       <HomeTab.Screen options={{
         //header
-        title: "Публикации",
+        title: "Posts",
         headerStyle: {
           height: 88,
           
@@ -52,7 +55,7 @@ const HomeScreen = ({navigation}) => {
             justifyContent: "center",
             right: 16
           }}>
-            <LogOutIcon />
+            <LogOutIcon onPress={()=> dispatch(logOut())} />
           </TouchableOpacity>
         ),
         
@@ -62,7 +65,7 @@ const HomeScreen = ({navigation}) => {
       }} name="PostsScreen" component={PostsScreen}/>
       <HomeTab.Screen options={{
         //header
-        title: "Создать публикацию",
+        title: "Create post",
         headerStyle: {
           height: 88,
           
@@ -94,32 +97,7 @@ const HomeScreen = ({navigation}) => {
         ), tabBarStyle: {display: "none"}
       }} name="CreatePosts" component={CreatePostsScreen}/>
       <HomeTab.Screen options={{
-        //header
-        title: "Профиль",
-        headerStyle: {
-          height: 88,
-          
-          borderBottomWidth: 1,
-          borderBottomColor: "#b3b3b3",
-        },
-        headerTitleAlign: "center",
-        headerTitleStyle: {
-          fontFamily: "Roboto-Medium",
-          fontWeight: "bold",
-          fontSize: 17,
-          lineHeight: 22,
-        },
-
-        headerRight: () => (
-          <TouchableOpacity style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            right: 16
-          }}>
-            <LogOutIcon />
-          </TouchableOpacity>
-        ),
+        headerShown: false,
         tabBarIcon: ({ focused, size, color }) => (
           <ProfileIcon />
         )

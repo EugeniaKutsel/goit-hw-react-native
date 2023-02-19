@@ -41,7 +41,7 @@ const ProfileScreen = ({ navigation }) => {
           </View>
           <LogOutIcon onPress={() => dispatch(logOut())} style={{ position: "absolute", top: 22, right: 16 }} />
           <Text style={styles.title}>{login}</Text>
-          <FlatList data={userPosts} keyExtractor={(item, index) => index.toString} showsVerticalScrollIndicator={false}
+          <FlatList data={userPosts} keyExtractor={(item, index) => index.toString()} showsVerticalScrollIndicator={false}
             renderItem={({ item }) =>
               <View style={styles.imageContainer}>
                 <Image source={{ uri: item.photo }} style={{ height: 240, borderRadius: 8 }} />

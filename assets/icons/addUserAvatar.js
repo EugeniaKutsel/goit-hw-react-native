@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Circle, Path } from "react-native-svg"
 
-const AddUserPhoto = (props) => (
+const AddUserAvatar = (props) => (
   <Svg
     width={25}
     height={25}
@@ -19,4 +19,4 @@ const AddUserPhoto = (props) => (
   </Svg>
 )
 
-export default AddUserPhoto;
+export default AddUserAvatar;

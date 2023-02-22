@@ -1,12 +1,12 @@
-import { Link } from "@react-navigation/native";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Text, TextInput, TouchableOpacity, View, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Link } from "@react-navigation/native";
+import { registration } from "../../../redux/auth/authOperations";
+import { Text, TextInput, TouchableOpacity, View, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Image } from "react-native";
 
 import styles from "./RegistrationScreen.styled";
-import AddUserPhoto from "../../../assets/icons/addUserPhoto";
-import { registration } from "../../../redux/auth/authOperations";
 import BG from "../../../components/BG/BG";
+import UserAvatar from "../../../components/UserAvatar/UserAvatar";
 
 const initialValues = {
   login: '',
@@ -17,6 +17,7 @@ const initialValues = {
 const RegistrationScreen = () => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialValues);
+  const [avatar, setAvatar] = useState(null);
 
   const [borderInputColorLogin, setBorderInputColorLogin] = useState("#E8E8E8");
   const [borderInputColorEmail, setBorderInputColorEmail] = useState("#E8E8E8");
@@ -32,8 +33,9 @@ const RegistrationScreen = () => {
   const handleSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    dispatch(registration(state))
+    dispatch(registration({...state, avatar}))
     setState(initialValues);
+    setAvatar(null);
   }
 
   return (
@@ -42,11 +44,7 @@ const RegistrationScreen = () => {
         <View style={styles.container}>
           <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "margin"}>
             <View style={{ ...styles.form, paddingBottom: isShowKeyboard ? 16 : 78 }}>
-              <View style={styles.userPhoto}>
-                <TouchableOpacity style={styles.addIcon}>
-                  <AddUserPhoto />
-                </TouchableOpacity>
-              </View>
+              <UserAvatar avatar={avatar} setAvatar={setAvatar}/>
               <Text style={styles.title}>Registration</Text>
               <TextInput
                 placeholder="Login"

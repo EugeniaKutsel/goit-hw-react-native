@@ -25,7 +25,6 @@ container: {
   userPhoto: {
     width: 120,
     height: 120,
-    backgroundColor: "#F6F6F6",
     position: "absolute",
     top: -60,
     left: "50%",

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { FlatList, Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { useSelector } from "react-redux";
 import { db } from "../../../firebase/config";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
 
 import styles from "./CommentsScreen.styled";
 import SendCommentIcon from "../../../assets/icons/sendComment";
+import { authSelectors } from "../../../redux/auth/authSelectors";
 
 const CommentsScreen = ({ route }) => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
@@ -13,7 +14,7 @@ const CommentsScreen = ({ route }) => {
   const [comment, setComment] = useState('');
   const [allComments, setAllComments] = useState([]);
 
-  const { login } = useSelector((state) => state.auth)
+  const { login, userAvatar } = useSelector(authSelectors.getUser);
 
   const addComment = async () => {
     const docRef = doc(db, "posts", postId)
@@ -34,39 +35,27 @@ const CommentsScreen = ({ route }) => {
     getAllComments();
   }, [])
 
-  const keyboardHide = () => {
-    setIsShowKeyboard(false);
-    Keyboard.dismiss();
-  }
-
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
-      <View style={styles.container}>
-        <View>
-          <Image source={{ uri: photo }} style={{ height: 240, borderRadius: 8 }} />
-        </View>
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <View style={{...styles.commentsWrapper, display: isShowKeyboard ? "none" : "flex"}}>
+    <View style={styles.container}>
+      <View style={styles.image}>
+        <Image source={{ uri: photo }} style={{width: "100%", height: 240, borderRadius: 8}} />
+      </View>
           <FlatList data={allComments} keyExtractor={(item) => item.id}
             renderItem={({ item }) =>
               <View style={styles.commentsList}>
-                <Image source={require("../../../assets/images/Ellipse.png")} style={styles.photoUser} />
+                <Image source={{uri: userAvatar}} style={styles.photoUser} />
                 <Text style={styles.commentText}>{item.comment}</Text>
               </View>
             }
           />
-        </View>
-        <View style={{...styles.inputWrapper, marginTop: isShowKeyboard ? 20 : 0}}>
+        <View style={styles.inputWrapper}>
             <TextInput style={styles.input}
-              onFocus={() => { setIsShowKeyboard(true) }}
               onChangeText={setComment} placeholder="Comments..." />
           <TouchableOpacity onPress={addComment}>
             <SendCommentIcon />
           </TouchableOpacity>
           </View>
-          </KeyboardAvoidingView>
       </View>
-    </TouchableWithoutFeedback>
   )
 }
 

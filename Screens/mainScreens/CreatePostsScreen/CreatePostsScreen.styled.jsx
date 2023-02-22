@@ -8,32 +8,42 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingTop: 32
   },
-  camera: {
+  cameraWrapper: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
     height: 240,
+    backgroundColor: "#F6F6F6",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#E8E8E8"
+  },
+  cameraBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+    backgroundColor: "#fff",
+    width: 60,
+    height: 60
+  },
+  loadPhotoText: {
+    marginTop: 8,
+    color: "#BDBDBD",
+    fontSize: 16,
+    marginBottom: 32
+  },
+  openCamera: {
+    height: 240,
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
     borderRadius: 8
   },
-  image: {
+  takePhoto: {
     position: "absolute",
-    borderRadius: 8,
   },
-  cameraBtn: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF4D",
-    borderRadius: 50,
-    width: 60,
-    height: 60
-  },
-  loadPhoto: {
-    fontSize: 16,
-    color: "#BDBDBD",
-    marginTop: 8, 
-    marginBottom: 32
-  },
-  input: {
+   input: {
     flexDirection: "row",
     alignItems: "center",
     borderBottomColor: "#BDBDBD",
@@ -69,7 +79,6 @@ const styles = StyleSheet.create({
     width: 70, 
     height: 40,
   }
-  
 })
 
 export default styles;

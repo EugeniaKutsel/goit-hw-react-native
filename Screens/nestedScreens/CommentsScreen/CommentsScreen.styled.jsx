@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
     marginVertical: 24,
   },
   photoUser: {
+    width: 28,
+    height: 28,
+    borderRadius: 50,
     marginRight: 16
   },
   commentText: {

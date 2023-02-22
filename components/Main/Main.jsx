@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { useRoute } from "../../router";
@@ -10,7 +10,6 @@ import { authStateChangeUser } from "../../redux/auth/authOperations";
 SplashScreen.preventAutoHideAsync();
 
 const Main = () => {
-  const {stateChange} = useSelector((state) => state.auth)
 
   const dispatch = useDispatch();
 
@@ -18,7 +17,7 @@ const Main = () => {
     dispatch(authStateChangeUser())
   }, [])
 
-  const routing = useRoute(stateChange);
+  const routing = useRoute();
 
   const [fontsLoaded] = useFonts({
     "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
@@ -32,8 +31,10 @@ const Main = () => {
     }
  }, [fontsLoaded]);
   
-   if (!fontsLoaded) {
-    return null;
+  if (!fontsLoaded) {
+    return (
+      <ActivityIndicator style={{width: 30, height: 30, color: "blue"}} />
+    )
   }
 
   return (

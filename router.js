@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
+import { useSelector } from "react-redux";
+import { authSelectors } from "./redux/auth/authSelectors";
 
 import RegistrationScreen from './Screens/auth/RegistrationScreen/RegistrationScreen';
 import LoginScreen from './Screens/auth/LoginScreen/LoginScreen';
@@ -10,11 +12,12 @@ import CommentsScreen from "./Screens/nestedScreens/CommentsScreen/CommentsScree
 const AuthStack = createStackNavigator();
 const MainTab = createStackNavigator();
 
-const useRoute = (isAuth) => {
+const useRoute = () => {
+  const isAuth = useSelector(authSelectors.getIsAuth)
 
   if (!isAuth) {
     return (
-      <AuthStack.Navigator>
+      <AuthStack.Navigator initialRouteName="Login">
         <AuthStack.Screen options={{ headerShown: false }} name="Registration" component={RegistrationScreen}>
         </AuthStack.Screen>
         <AuthStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen}>

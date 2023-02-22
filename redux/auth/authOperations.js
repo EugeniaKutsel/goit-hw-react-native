@@ -1,42 +1,44 @@
 import { auth } from "../../firebase/config";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { authSlice } from "./authSlice";
+import uploadUserAvatarToServer from "../../api/uploadUserAvatarToServer";
 
-
-const registration = ({ login, email, password }) =>
+const registration = ({ login, email, password, avatar }) =>
   async (dispatch, getState) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      const user1 = auth.currentUser;
-      console.log("user1", user1);
+
+       // Upload photo to server
+      const avatarUrl = await uploadUserAvatarToServer(avatar)
       
       await updateProfile(auth.currentUser, {
         displayName: login,
-        email: email
+        photoURL: avatarUrl
       })
 
       const user = auth.currentUser;
 
-      const userUpdateProfile = {
-        userId: user.uid,
-        login: user.displayName,
-        email: user.email
+      const payload = {
+        userId: user?.uid,
+        login: user?.displayName,
+        email: user?.email,
+        userAvatar: user?.photoURL
       }
       
-      dispatch(authSlice.actions.updateUserProfile(userUpdateProfile))
-      console.log("user", user);
+      dispatch(authSlice.actions.updateUserProfile(payload))
     } catch (error) {
-     console.log(error.message);
+      alert(error.message)
     }
   }
 
 const login = ({email, password}) =>
   async (dispatch, getState) => {
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password)
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      
       console.log(user);
     } catch (error) {
-     console.log(error.message);
+     alert(error.message)
     }
   }
 
@@ -46,7 +48,7 @@ const logOut = () =>
       await signOut(auth);
       dispatch(authSlice.actions.authLogOut())
     } catch (error) {
-      console.log(error.message);
+       alert(error.message)
     }
   }
 
@@ -54,13 +56,14 @@ const authStateChangeUser = () =>
   async (dispatch, getState) => {
     await onAuthStateChanged(auth, (user) => {
       if (user) {
-        const userUpdateProfile = {
+        const payload = {
           userId: user.uid,
           login: user.displayName,
-          email: user.email
+          email: user.email,
+          userAvatar: user.photoURL
         }
-        dispatch(authSlice.actions.updateUserProfile(userUpdateProfile));
-        dispatch(authSlice.actions.authStateChange({stateChange: true}))
+        dispatch(authSlice.actions.updateUserProfile(payload));
+        dispatch(authSlice.actions.authStateChange(true))
       }
     })
   }

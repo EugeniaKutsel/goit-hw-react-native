@@ -6,38 +6,45 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingLeft: 16,
     paddingRight: 16,
-    paddingVertical: 32
+    paddingTop: 32
   },
-  containerUser: {
+   containerHeader: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 32
   },
   userPhoto: {
-    marginRight: 8
+    width: 60,
+    height: 60,
+
+    marginRight: 8,
+
+    borderRadius: 16,
   },
   userName: {
-    fontFamily: "Roboto-Bold",
     fontWeight: "700",
     fontSize: 13,
     lineHeight: 15,
+
+    color: "#212121",
   },
   userEmail: {
-    fontFamily: "Roboto-Regular",
     fontWeight: "400",
     fontSize: 11,
-    lineHeight: 15,
-    color: "#212121CC"
+    lineHeight: 13,
+
+    color: "#212121",
   },
   imageContainer: {
-    marginBottom: 32,
+    marginBottom: 32
   },
-  name: {
-    marginTop: 8,
-    marginBottom: 8,
-    fontSize: 16,
+  imageDetails: {
+    marginTop: 8
+  },
+  title: {
     fontFamily: "Roboto-Medium",
-    fontWeight: "500"
+    fontSize: 16,
+    marginBottom: 8
   }
 })
 

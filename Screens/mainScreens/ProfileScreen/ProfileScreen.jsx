@@ -7,17 +7,18 @@ import { db } from "../../../firebase/config";
 import BG from "../../../components/BG/BG";
 
 import styles from "./ProfileScreen.styled";
-import AddUserPhoto from "../../../assets/icons/addUserPhoto";
 import LogOutIcon from "../../../assets/icons/logOutIcon";
 import CommentsIcon from "../../../assets/icons/commentsIcon";
 import MapIcon from "../../../assets/icons/mapIcon";
 import LikeIcon from "../../../assets/icons/likesIcon";
+import { authSelectors } from "../../../redux/auth/authSelectors";
+import DeleteAvatarIcon from "../../../assets/icons/deleteAvatar";
 
 const ProfileScreen = ({ navigation }) => {
   const [userPosts, setUserPosts] = useState([]);
   const dispatch = useDispatch();
 
-  const { userId, login } = useSelector((state) => state.auth)
+  const { userId, login, userAvatar } = useSelector(authSelectors.getUser)
 
   const getUserPosts = async () => {
     const q = query(collection(db, "posts"), where("userId", "==", userId));
@@ -35,16 +36,17 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.form}>
           <View style={styles.userPhoto}>
+            <Image source={{ uri: userAvatar }} style={{width: 120, height: 120, borderRadius: 16}} />
             <TouchableOpacity style={styles.addIcon}>
-              <AddUserPhoto />
+              <DeleteAvatarIcon />
             </TouchableOpacity>
           </View>
           <LogOutIcon onPress={() => dispatch(logOut())} style={{ position: "absolute", top: 22, right: 16 }} />
           <Text style={styles.title}>{login}</Text>
-          <FlatList data={userPosts} keyExtractor={(item, index) => index.toString()} showsVerticalScrollIndicator={false}
+          <FlatList data={userPosts} keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) =>
               <View style={styles.imageContainer}>
-                <Image source={{ uri: item.photo }} style={{ height: 240, borderRadius: 8 }} />
+                <Image source={{ uri: item.photoUrl }} style={{ height: 240, borderRadius: 8 }} />
                 <View style={styles.imageDetails}>
                   <Text style={styles.name}>{item.title}</Text>
                   <View style={{ flexDirection: "row", justifyContent: "space-between" }}>

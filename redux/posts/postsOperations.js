@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc} from "firebase/firestore";
 import { db } from "../../firebase/config";
 
 const addPost = ({title, locationName, photoUrl, userId, login, userAvatar, location}) => async (dispatch, getState) => {
@@ -18,8 +18,36 @@ const addPost = ({title, locationName, photoUrl, userId, login, userAvatar, loca
   }
 };
 
+const addCommentByPostID =
+  (postId, commentData) => async (dispatch, getState) => {
+    try {
+      // Get data from state
+      const { login, userId, userAvatar } = getState().auth.user;
+
+      // Create comment
+      const comment = {
+        comment: commentData,
+        authorName: login,
+        authorId: userId,
+        authorAvatar: userAvatar,
+        postId: postId,
+      };
+
+      // Get ref to post by postId
+      const docRef = doc(db, "posts", postId);
+
+      // Add comment to collection
+      await addDoc(collection(docRef, "comments"), { ...comment });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+
+
 const postsOperations = {
-  addPost
+  addPost,
+  addCommentByPostID,
 };
 
 export default postsOperations;

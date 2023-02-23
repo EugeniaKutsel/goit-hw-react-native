@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E8E8E8"
   },
+  pickPhoto: {
+    position: "absolute",
+  },
   cameraBtn: {
     alignItems: "center",
     justifyContent: "center",

@@ -18,6 +18,7 @@ const RegistrationScreen = () => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialValues);
   const [avatar, setAvatar] = useState(null);
+  const [showPassword, setShowPassword] = useState(true);
 
   const [borderInputColorLogin, setBorderInputColorLogin] = useState("#E8E8E8");
   const [borderInputColorEmail, setBorderInputColorEmail] = useState("#E8E8E8");
@@ -37,6 +38,8 @@ const RegistrationScreen = () => {
     setState(initialValues);
     setAvatar(null);
   }
+
+  const handleShowPassword = () => setShowPassword(!showPassword);
 
   return (
     <BG>
@@ -68,16 +71,18 @@ const RegistrationScreen = () => {
                 <TextInput
                   placeholder="Password"
                   placeholderTextColor={"#BDBDBD"}
-                  secureTextEntry={true}
+                  secureTextEntry={showPassword}
                   style={{...styles.input, borderColor: borderInputColorPassword}}
                   value={state.password}
                   onFocus={() => {setIsShowKeyboard(true), setBorderInputColorPassword("#FF6C00")}}
                   onBlur={() => setBorderInputColorPassword("#E8E8E8")}
                   onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
                 />
-                <TouchableOpacity style={styles.btnShowPassword}>
-                  <Text style={styles.showPassword}>Show</Text>
-                </TouchableOpacity>
+                 {showPassword ? (
+                    <Text style={styles.btnShowPassword} onPress={handleShowPassword}>Show</Text>
+                  ) : (
+                    <Text style={styles.btnShowPassword} onPress={handleShowPassword}>Hide</Text>
+                  )}
               </View>
               {!isShowKeyboard &&
                 <>

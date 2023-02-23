@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../firebase/config";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
 
 import styles from "./CommentsScreen.styled";
 import SendCommentIcon from "../../../assets/icons/sendComment";
 import { authSelectors } from "../../../redux/auth/authSelectors";
+import { postsSelectors } from "../../../redux/posts/postsSelectors";
+import postsOperations from "../../../redux/posts/postsOperations";
 
 const CommentsScreen = ({ route }) => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
@@ -14,47 +16,86 @@ const CommentsScreen = ({ route }) => {
   const [comment, setComment] = useState('');
   const [allComments, setAllComments] = useState([]);
 
-  const { login, userAvatar } = useSelector(authSelectors.getUser);
+  const dispatch = useDispatch();
 
-  const addComment = async () => {
-    const docRef = doc(db, "posts", postId)
-    const createComments = await addDoc(collection(docRef, "comments"), {
-      comment,
-      login
-    })
-  }
+  const [borderInputColorComment, setBorderInputColorComment] = useState("#E8E8E8");
+
+  const { userId } = useSelector(authSelectors.getUser);
+
+  const addComment = () => {
+    dispatch(postsOperations.addCommentByPostID(postId, comment));
+  };
 
   const getAllComments = async () => {
-    const docRef = doc(db, "posts", postId)
+     const docRef = doc(db, "posts", postId)
     await onSnapshot(collection(docRef, "comments"), (data) => {
       setAllComments(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     })
   }
 
   useEffect(() => {
-    getAllComments();
-  }, [])
+   getAllComments()
+  }, []);
+
+  
+  const keyboardHide = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+  }
+
+  const onReserForm = () => {
+    setComment("");
+  }
+  
 
   return (
-    <View style={styles.container}>
-      <View style={styles.image}>
+      <View style={styles.container}>
+         <View style={styles.image}>
         <Image source={{ uri: photo }} style={{width: "100%", height: 240, borderRadius: 8}} />
-      </View>
-          <FlatList data={allComments} keyExtractor={(item) => item.id}
-            renderItem={({ item }) =>
-              <View style={styles.commentsList}>
-                <Image source={{uri: userAvatar}} style={styles.photoUser} />
-                <Text style={styles.commentText}>{item.comment}</Text>
-              </View>
-            }
-          />
+        </View>
+        <View style={styles.containerList}>
+<FlatList data={allComments ?? []} keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              ...styles.containerItem,
+              flexDirection: item.authorId === userId ? "row-reverse" : "row",
+            }}
+          >
+            <Image
+              source={{ uri: item.authorAvatar }}
+              style={{
+                ...styles.authorAvatar,
+                marginRight: item.authorId === userId ? 0 : 16,
+                marginLeft: !item.authorId === userId ? 0 : 16,
+              }}
+            />
+            <View
+              style={{
+                ...styles.commentWrapper,
+                borderTopRightRadius: item.authorId === userId ? 0 : 16,
+                borderTopLeftRadius: !item.authorId === userId ? 0 : 16,
+              }}
+            >
+              <Text style={styles.commentAuthor}>{item.comment}</Text>
+            </View>
+          </View>
+        )}
+      />
+        </View>
         <View style={styles.inputWrapper}>
-            <TextInput style={styles.input}
-              onChangeText={setComment} placeholder="Comments..." />
-          <TouchableOpacity onPress={addComment}>
+          <TextInput
+            onChangeText={setComment}
+            placeholder="Comments..."
+            placeholderTextColor={"#BDBDBD"}
+            style={styles.input}
+          />
+          <TouchableOpacity
+            onPress={addComment}
+          >
             <SendCommentIcon />
           </TouchableOpacity>
-          </View>
+        </View>
       </View>
   )
 }

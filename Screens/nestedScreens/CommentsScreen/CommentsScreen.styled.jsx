@@ -3,14 +3,51 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
     backgroundColor: "#ffffff",
     paddingLeft: 16,
     paddingRight: 16,
     paddingBottom: 16,
     paddingTop: 32
   },
-  inputWrapper: {
+  containerList: {
+    paddingTop: 32,
+    height: 323
+  },
+  containerItem: {
+    display: "flex",
+    flexDirection: "row",
+
+    paddingBottom: 24,
+
+    backgroundColor: "#FFFFFF",
+  },
+  authorAvatar: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+  },
+  commentWrapper: {
+    flex: 1,
+    padding: 16,
+
+    backgroundColor: " rgba(0, 0, 0, 0.03)",
+    borderBottomRightRadius: 16,
+    borderBottomLeftRadius: 16,
+  },
+  commentAuthor: {
+    marginBottom: 8,
+
+    fontWeight: "400",
+    fontSize: 13,
+    lineHeight: 18,
+
+    color: "#212121",
+  },
+   inputWrapper: {
+    position: "absolute",
+    bottom: 16,
+    left: 16,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -22,33 +59,6 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 8
   },
-  commentsWrapper: {
-    alignItems: "center",
-    height: 323,
-    marginBottom: 32
-  },
-  commentsList: {
-    flexDirection: "row",
-    marginVertical: 24,
-  },
-  photoUser: {
-    width: 28,
-    height: 28,
-    borderRadius: 50,
-    marginRight: 16
-  },
-  commentText: {
-    width: "100%",
-    fontFamily: "Roboto-Regular",
-    fontSize: 13,
-    borderRadius: 6,
-    borderTopLeftRadius: 0,
-    backgroundColor: "#00000008",
-    paddingTop: 16,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 35
-  }
 })
 
 export default styles;

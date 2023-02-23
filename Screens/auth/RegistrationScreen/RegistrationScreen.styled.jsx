@@ -37,7 +37,10 @@ const styles = StyleSheet.create({
   btnShowPassword: {
     position: "absolute",
     right: 16,
-    top: 16
+    top: 16,
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    color: "#1B4371",
   },
   showPassword: {
     fontFamily: "Roboto-Regular",

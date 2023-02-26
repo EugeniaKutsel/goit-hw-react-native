@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { FlatList, Image, Keyboard, KeyboardAvoidingView, ScrollView, ScrollViewComponent, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../firebase/config";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
@@ -7,7 +7,6 @@ import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import styles from "./CommentsScreen.styled";
 import SendCommentIcon from "../../../assets/icons/sendComment";
 import { authSelectors } from "../../../redux/auth/authSelectors";
-import { postsSelectors } from "../../../redux/posts/postsSelectors";
 import postsOperations from "../../../redux/posts/postsOperations";
 
 const CommentsScreen = ({ route }) => {
@@ -51,10 +50,10 @@ const CommentsScreen = ({ route }) => {
   return (
       <View style={styles.container}>
          <View style={styles.image}>
-        <Image source={{ uri: photo }} style={{width: "100%", height: 240, borderRadius: 8}} />
-        </View>
-        <View style={styles.containerList}>
-<FlatList data={allComments ?? []} keyExtractor={(item) => item.id}
+        <Image source={{ uri: photo }} style={{ height: 240, borderRadius: 8}} />
+          </View>
+        <View style={{ ...styles.containerList}} >
+          <FlatList data={allComments} keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View
             style={{
@@ -82,16 +81,19 @@ const CommentsScreen = ({ route }) => {
           </View>
         )}
       />
-        </View>
-        <View style={styles.inputWrapper}>
+            </View>
+         <View style={{
+        ...styles.inputWrapper,
+      }}>
           <TextInput
-            onChangeText={setComment}
+          onChangeText={setComment}
+          onFocus={() => { setIsShowKeyboard(true) }}
             placeholder="Comments..."
             placeholderTextColor={"#BDBDBD"}
             style={styles.input}
           />
           <TouchableOpacity
-            onPress={addComment}
+          onPress={ addComment}
           >
             <SendCommentIcon />
           </TouchableOpacity>

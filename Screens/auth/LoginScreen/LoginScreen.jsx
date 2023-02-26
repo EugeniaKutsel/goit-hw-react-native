@@ -50,6 +50,7 @@ const LoginScreen = () => {
                 value={state.email}
                 onFocus={() => {setIsShowKeyboard(true), setBorderInputColorEmail("#FF6C00")}}
                 onBlur={() => setBorderInputColorEmail("#E8E8E8")}
+                onSubmitEditing={keyboardHide}
                 onChangeText={(value) => setState((prevState) => ({ ...prevState, email: value }))}
               />
               <View style={styles.inputWrapper}>
@@ -60,6 +61,7 @@ const LoginScreen = () => {
                   value={state.password}
                   onFocus={() => {setIsShowKeyboard(true), setBorderInputColorPassword("#FF6C00")}}
                   onBlur={() => setBorderInputColorPassword("#E8E8E8")}
+                  onSubmitEditing={keyboardHide}
                   onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
                 />
                   {showPassword ? (

@@ -56,6 +56,7 @@ const RegistrationScreen = () => {
                 value={state.login}
                 onFocus={() => { setIsShowKeyboard(true), setBorderInputColorLogin("#FF6C00") }}
                 onBlur={() => setBorderInputColorLogin("#E8E8E8")}
+                onSubmitEditing={keyboardHide}
                 onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
               />
               <TextInput
@@ -65,6 +66,7 @@ const RegistrationScreen = () => {
                 value={state.email}
                 onFocus={() => {setIsShowKeyboard(true), setBorderInputColorEmail("#FF6C00")}}
                 onBlur={() => setBorderInputColorEmail("#E8E8E8")}
+                onSubmitEditing={keyboardHide}
                 onChangeText={(value) => setState((prevState) => ({ ...prevState, email: value }))}
               />
               <View style={styles.inputWrapper}>
@@ -76,6 +78,7 @@ const RegistrationScreen = () => {
                   value={state.password}
                   onFocus={() => {setIsShowKeyboard(true), setBorderInputColorPassword("#FF6C00")}}
                   onBlur={() => setBorderInputColorPassword("#E8E8E8")}
+                  onSubmitEditing={keyboardHide}
                   onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
                 />
                  {showPassword ? (

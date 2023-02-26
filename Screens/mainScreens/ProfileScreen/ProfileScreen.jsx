@@ -23,7 +23,7 @@ const ProfileScreen = ({ navigation }) => {
   const getUserPosts = async () => {
     const q = query(collection(db, "posts"), where("userId", "==", userId));
     await onSnapshot(q, (data) => {
-     setUserPosts(data.docs.map(doc => ({ ...doc.data() })))
+     setUserPosts(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     })
   }
 
@@ -43,7 +43,7 @@ const ProfileScreen = ({ navigation }) => {
           </View>
           <LogOutIcon onPress={() => dispatch(logOut())} style={{ position: "absolute", top: 22, right: 16 }} />
           <Text style={styles.title}>{login}</Text>
-          <FlatList data={userPosts} keyExtractor={(item, index) => index.toString()}
+          <FlatList data={userPosts} keyExtractor={(item) => item.id}
             renderItem={({ item }) =>
               <View style={styles.imageContainer}>
                 <Image source={{ uri: item.photoUrl }} style={{ height: 240, borderRadius: 8 }} />
@@ -51,7 +51,7 @@ const ProfileScreen = ({ navigation }) => {
                   <Text style={styles.name}>{item.title}</Text>
                   <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                      <TouchableOpacity onPress={() => navigation.navigate("Comments", { postId: item.id, photo: item.photo })} style={{ flexDirection: "row", alignItems: "center", marginRight: 24 }}>
+                      <TouchableOpacity onPress={() => navigation.navigate("Comments", { postId: item.id, photo: item.photoUrl, comment: item.comment })} style={{ flexDirection: "row", alignItems: "center", marginRight: 24 }}>
                         <CommentsIcon />
                         <Text style={{ marginLeft: 6, color: "#BDBDBD" }}>0</Text>
                       </TouchableOpacity>

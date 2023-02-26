@@ -43,8 +43,6 @@ const addCommentByPostID =
     }
   };
 
-
-
 const postsOperations = {
   addPost,
   addCommentByPostID,
